@@ -1,4 +1,4 @@
-import hand_detector2 as hdm
+import palm_movement_detection as hdm
 import cv2
 import pandas as pd
 import numpy as np
@@ -13,7 +13,7 @@ import time  # Added for potential timing operations
 warnings.filterwarnings("ignore")
 
 # Read and process data
-data = pd.read_csv('sign_language.csv')
+data = pd.read_csv('sign_hand_gesture_data.csv')
 data = data.loc[:, ~data.columns.str.contains('^Unnamed')]
 
 X = data.drop('label', axis=1)
@@ -193,12 +193,12 @@ def main():
         
         # If c is pressed, update the dataset and stop the program
         if key == ord('c'):
-            old_data = pd.read_csv('sign_language.csv')
+            old_data = pd.read_csv('sign_hand_gesture_data.csv')
             new_data = convert_sequences(sequences, 'help')
             if new_data:  # Only proceed if new_data is not None
                 new_data = pd.DataFrame(new_data)
                 updated_data = pd.concat([old_data, new_data], ignore_index=True)
-                updated_data.to_csv('sign_language.csv', index=False)
+                updated_data.to_csv('sign_hand_gesture_data.csv', index=False)
                 with open('recent_data.pkl', 'wb') as f:
                     pickle.dump(old_data, f)
                 print("Dataset updated successfully!")

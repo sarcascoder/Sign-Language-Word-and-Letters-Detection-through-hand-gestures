@@ -1,4 +1,4 @@
-import hand_detector2 as hdm
+import palm_movement_detection as hdm
 import cv2
 import pandas as pd
 import numpy as np
@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Read and process data
-data = pd.read_csv('hand_signals.csv')
+data = pd.read_csv('palm_movement.csv')
 data = data.loc[:, ~data.columns.str.contains('^Unnamed')]
 
 X = data.drop('letter', axis=1)
@@ -170,11 +170,11 @@ def main():
         signal_data['letter'] = ['a'] * len(signal_data['0x'])
         new_signals = pd.DataFrame(signal_data)
         try:
-            existing_signals = pd.read_csv('hand_signals.csv')
+            existing_signals = pd.read_csv('palm_movement.csv')
             updated_stats = pd.concat([existing_signals, new_signals], ignore_index=True)
         except FileNotFoundError:
             updated_stats = new_signals
-        updated_stats.to_csv('hand_signals.csv', index=False)
+        updated_stats.to_csv('palm_movement.csv', index=False)
 
 # Runs the program
 if __name__ == '__main__':
