@@ -1,57 +1,77 @@
-# Real-Time ASL Interpreter
+# Sign Language Word and Letters Detection through Hand Gestures
 
-A machine learning application that translates American Sign Language gestures into text and speech in real-time using webcam input.
+A real-time sign language detection system using computer vision and machine learning techniques to recognize and interpret American Sign Language (ASL) hand gestures in live video.
 
-## ✨ Features
-- **Hand Tracking**: MediaPipe-powered 21-point landmark detection
-- **Letter Recognition**: Logistic Regression model for static ASL letters
-- **Word Detection**: Random Forest Classifier for dynamic gestures
-- **Audio Feedback**: gTTS + pyGame voice output
-- **Data Collection**: Live gesture capture for model improvement
+## Project Structure
 
-## 🚀 Quick Start
+- `__pycache__/` - Python cache directory
+- `virtualenv/` - Virtual environment folder
+- `.gitignore` - Specifies intentionally untracked files to ignore
+- `palm_movement_detection.py` - Core module for hand detection and tracking using MediaPipe
+- `palm_prediction.py` - Script for detecting and analyzing palm positions
+- `letter_prediction.py` - Script for detecting and interpreting individual letters
+- `word_prediction.py` - Script for detecting and interpreting words
+- `palm_movement.csv` - Dataset containing palm movement data
+- `README.md` - This documentation file
+- `recent_data.pkl` - Pickle file containing recently collected data
+- `requirements.txt` - List of Python dependencies
+- `sign_hand_gesture_data.csv` - Dataset containing hand gesture data
+
+## Dependencies
+
+This project relies on several Python libraries:
+
+- OpenCV (cv2) - For image processing and computer vision
+- Mediapipe - For hand landmark detection
+- NumPy - For numerical operations
+- pandas - For data manipulation
+- scikit-learn - For machine learning algorithms
+- gTTS and pygame - For text-to-speech functionality
+
+Install all dependencies using:
+
 ```bash
-git clone https://github.com/yourusername/sign-language-interpreter.git
-cd sign-language-interpreter
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# Run modules
-python letter_interpreter.py  # For letters
-python word_interpreter.py   # For words
 ```
 
-## 🎮 Controls
-| Key | Action |
-|-----|--------|
-| `q` | Quit |
-| `c` | Capture new gesture |
+## Hand Detection Module
 
-## 🛠 Core Components
-- `hand_detector2.py`: MediaPipe hand tracking
-- `letter_interpreter.py`: Static letter classification
-- `word_interpreter.py`: Dynamic gesture recognition
+The core of this project is implemented in `palm_movement_detection.py` which provides methods for detecting and tracking hands using MediaPipe:
 
-## 🔮 Roadmap
-- [ ] Support full ASL alphabet (including dynamic letters)
-- [ ] Expand vocabulary
-- [ ] User-specific gesture profiles
-- [ ] Mobile app development
+- `find_hands(img, draw=True)` - Processes an image and optionally draws the hand landmarks
+- `find_position(img, draw=True)` - Returns the position of hand landmarks in the image and optionally draws them
 
-> **Note**: Requires Python 3.8+ and a webcam
+The detector can be configured with several parameters:
+- `mode` - Determines if the detector runs in video mode or static image mode
+- `max_hands` - The maximum number of hands to detect and track
+- `detection_con` - Minimum confidence value for hand detection
+- `presence_con` - Minimum confidence value for hand landmark presence
+- `track_con` - Minimum confidence value for hand landmark tracking
+
+## Usage
+
+1. Run letter detection:
+```bash
+python letter_prediction.py
 ```
 
-### Key Improvements:
-1. **Better Organization**: Clear section headers with emojis
-2. **Concise Feature List**: Bullet points instead of paragraphs
-3. **Table Format Controls**: Easier to read
-4. **Future Plans as Checklist**: More actionable
-5. **Removed Redundancies**: Kept only essential technical details
-6. **Mobile-Friendly**: Shorter lines and clear formatting
+2. Run word detection:
+```bash
+python word_prediction.py
+```
 
-Would you like me to adjust any section further? For example, we could:
-- Add a demo GIF/video link
-- Include system requirements in detail
-- Add contribution guidelines
-- Include benchmark results
+## Data
+
+The project uses two primary datasets:
+- `palm_movement.csv` - Contains palm movement sequences for gesture recognition
+- `sign_hand_gesture_data.csv` - Contains hand gesture data for sign language interpretation
+
+## Features
+
+- Real-time hand gesture recognition using webcam
+- Letter-by-letter sign language interpretation
+- Word-level sign language interpretation
+- Text-to-speech conversion of interpreted signs
+- Data collection mode to add new gestures and improve model accuracy
+
+## License
